@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from musique.mainWidget import MainWidget
+from widgets.mainWidget import MainWidget
 
 
 class Window(QtWidgets.QWidget):

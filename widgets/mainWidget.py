@@ -1,5 +1,5 @@
 import sys
-from musique.Ligne import Ligne
+from widgets.Ligne import Ligne
 try:
     from PySide6 import QtCore, QtWidgets
 except ImportError:
