@@ -11,13 +11,11 @@ except ImportError:
 class MainWidget(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-
-        
+        self.note_changer = None
         self.first_line = Ligne()
         self.currentIndex= None
         
-        self.layoutMain = QtWidgets.QVBoxLayout()
-        
+        self.layoutMain = QtWidgets.QVBoxLayout()      
         
         self.first_line_display = QtWidgets.QListWidget()
         self.first_line_display.setFlow(QtWidgets.QListWidget.LeftToRight)
@@ -36,13 +34,15 @@ class MainWidget(QtWidgets.QWidget):
     @QtCore.Slot()
         
     def setCurrentIndex(self):
+        print(self.first_line_display.currentRow())
+        self.currentIndex = self.first_line_display.currentRow()
+        if (self.note_changer != None):
+            return
         self.note_changer = QtWidgets.QLineEdit()
         self.note_changer.setPlaceholderText("Enter a note from 0 to 24 °o°")
         self.submit_button = QtWidgets.QPushButton("Submit")
         self.layoutMain.addWidget(self.note_changer)
         self.layoutMain.addWidget(self.submit_button)
-        print(self.first_line_display.currentRow())
-        self.currentIndex = self.first_line_display.currentRow()
         self.submit_button.clicked.connect(self.addNote)
     
     def addNote(self):
