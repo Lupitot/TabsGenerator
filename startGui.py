@@ -6,7 +6,7 @@ from widgets.window import Window
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
 
-    QtCore.QCoreApplication.setApplicationName("To Do List")
+    QtCore.QCoreApplication.setApplicationName("Tabs Generator")
     widget= Window()
     widget.show()
     widget.resize(800, 600)
