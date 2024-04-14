@@ -15,5 +15,10 @@ class PdfGestion():
         c.drawText(textobject)
         c.save()
         
+
+    def set_filename(self, filename):
+        self.filename = filename
+        print("filename set to", filename)
+        
         
         

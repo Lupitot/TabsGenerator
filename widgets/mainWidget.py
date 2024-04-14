@@ -17,9 +17,87 @@ class MainWidget(QtWidgets.QWidget):
         self.fourth_line = Ligne()
         self.currentIndex= None
         
-        self.layoutMain = QtWidgets.QVBoxLayout()      
+        self.firstline = self.first_line.note_container
+        self.secondeLine = self.second_line.note_container
+        self.thirdLine = self.third_line.note_container
+        self.fourthLine = self.fourth_line.note_container
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #333;
+                color: #fff;
+                font-size: 16px;
+            }
+
+            #validateName {
+                background-color: #555;
+                border: none;
+                height: 50px;
+                width: 50px;
+                border-radius: 25px;
+            }
+            #validateName:hover {
+                background-color: #777;
+            }
+            #choiceName {
+                background-color: #555;
+                border: none;
+                padding: 5px;
+                margin: 5px;
+                font-size: 20px;
+            }
+            #download_PDF {
+                background-color: #555;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 25px;
+                font-size: 20px;
+            }
+            #download_PDF:hover {
+                background-color: #777;
+            }
+            #note_changer {
+                background-color: #555;
+                border: none;
+                padding: 5px;
+                margin: 5px;
+                font-size: 20px;
+            }
+            #submit_button {
+                background-color: #555;
+                border: none;
+                padding: 5px;
+                margin: 5px;
+                font-size: 20px;
+            }
+            
+            QListWidget {
+                background-color: #555;
+                border: none;
+                padding: 5px;
+                margin: 5px;
+            }
+
+        """)
         
-        self.download_PDF = QtWidgets.QPushButton("Download PDF")
+        
+        self.layoutMain = QtWidgets.QVBoxLayout()    
+        self.layoutLine = QtWidgets.QVBoxLayout()
+        self.layoutChoiceName = QtWidgets.QHBoxLayout()
+        
+        self.download_PDF = QtWidgets.QPushButton("💾")
+        self.download_PDF.setObjectName("download_PDF")
+        
+        self.choiceName = QtWidgets.QLineEdit()
+        self.choiceName.setPlaceholderText("Enter the name of the song")
+        self.choiceName.setAlignment(QtCore.Qt.AlignCenter)
+        self.choiceName.setObjectName("choiceName")
+        
+        self.validateName = QtWidgets.QPushButton("✅")
+        self.validateName.setObjectName("validateName")
+    
+
+        
         self.first_line_display = QtWidgets.QListWidget()
         self.first_line_display.setFlow(QtWidgets.QListWidget.LeftToRight)
         self.first_line_display.setFixedHeight(50)
@@ -33,6 +111,8 @@ class MainWidget(QtWidgets.QWidget):
         self.fourth_line_display.setFlow(QtWidgets.QListWidget.LeftToRight)
         self.fourth_line_display.setFixedHeight(50)
         
+        
+        
         for item in self.first_line.note_container:
             self.first_line_display.addItem(str(item))
         for item in self.second_line.note_container:
@@ -41,23 +121,28 @@ class MainWidget(QtWidgets.QWidget):
             self.third_line_display.addItem(str(item))
         for item in self.fourth_line.note_container:
             self.fourth_line_display.addItem(str(item))
-
-        self.layoutMain.addWidget(self.first_line_display)
-        self.layoutMain.addWidget(self.download_PDF)
-        self.setLayout(self.layoutMain)
+            
+        self.layoutChoiceName.addWidget(self.choiceName)
+        self.layoutChoiceName.addWidget(self.validateName)
+        self.layoutChoiceName.addWidget(self.download_PDF)
+        self.layoutLine.addWidget(self.first_line_display)
+        self.layoutLine.addWidget(self.second_line_display)
+        self.layoutLine.addWidget(self.third_line_display)
+        self.layoutLine.addWidget(self.fourth_line_display)
         
-        self.first_line_display.itemClicked.connect(self.setCurrentIndex)
-        self.download_PDF.clicked.connect(self.downloadPDF)
-        self.layoutMain.addWidget(self.second_line_display)
-        self.layoutMain.addWidget(self.third_line_display)
-        self.layoutMain.addWidget(self.fourth_line_display)
+        
+        self.layoutMain.addLayout(self.layoutChoiceName)
+        self.layoutMain.addLayout(self.layoutLine)
+        
+        
         self.setLayout(self.layoutMain)
         
         self.first_line_display.itemClicked.connect(lambda: self.setCurrentIndex(1))
         self.second_line_display.itemClicked.connect(lambda: self.setCurrentIndex(2))
         self.third_line_display.itemClicked.connect(lambda: self.setCurrentIndex(3))
         self.fourth_line_display.itemClicked.connect(lambda: self.setCurrentIndex(4))
-        
+        self.validateName.clicked.connect(self.validateNameSong)
+        self.download_PDF.clicked.connect(self.downloadPDF)
         
         
     @QtCore.Slot()
@@ -79,7 +164,9 @@ class MainWidget(QtWidgets.QWidget):
             self.resetSubmitWidget()
         self.note_changer = QtWidgets.QLineEdit()
         self.note_changer.setPlaceholderText("Enter a note from 0 to 24 °o°")
+        self.note_changer.setObjectName("note_changer")
         self.submit_button = QtWidgets.QPushButton("Submit")
+        self.submit_button.setObjectName("submit_button")
         self.layoutMain.addWidget(self.note_changer)
         self.layoutMain.addWidget(self.submit_button)
         self.submit_button.clicked.connect(lambda: self.addNote(lineNumber))
@@ -116,9 +203,17 @@ class MainWidget(QtWidgets.QWidget):
         thirdLine = self.third_line.note_container
         fourthLine = self.fourth_line.note_container
         
-        filename = "notes.pdf"
+        filename = self.choiceName.text() + ".pdf"
         PdfGestion(firstline,secondeLine, thirdLine, fourthLine, filename)
         print("PDF downloaded")
+        
+    def validateNameSong(self):
+        
+        print("Song name is", self.choiceName.text())
+        self.pdf = PdfGestion(self.firstline, self.secondeLine, self.thirdLine, self.fourthLine, "notes.pdf")
+        self.pdf.set_filename(self.choiceName.text()) 
+        self.choiceName.setEnabled(False)
+        self.validateName.deleteLater()
         
     
         

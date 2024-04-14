@@ -8,7 +8,9 @@ class Window(QtWidgets.QWidget):
 
         self.widget1 = MainWidget()
 
+
         layout = QtWidgets.QHBoxLayout(self)
+        
         layout.addWidget(self.widget1)
 
         self.setLayout(layout)

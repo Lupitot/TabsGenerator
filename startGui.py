@@ -5,7 +5,7 @@ from widgets.window import Window
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
-
+    app.setStyleSheet("QWidget  { background-color: #238C86; }")
     QtCore.QCoreApplication.setApplicationName("Tabs Generator")
     widget= Window()
     widget.show()
