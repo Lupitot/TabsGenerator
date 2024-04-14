@@ -1,16 +1,17 @@
 from reportlab.pdfgen import canvas
    
 class PdfGestion():
-    def __init__(self, pdfContent, filename):
+    def __init__(self, firstline, secondeLine, thirdLine, fourthLine, filename):
         self.filename = filename
-        self.pdfContent = pdfContent
+        self.pdfContent = [firstline, secondeLine , thirdLine, fourthLine]
         self.create_pdf()
 
     def create_pdf(self):
         c = canvas.Canvas(self.filename)
         textobject = c.beginText()
         textobject.setTextOrigin(10, 730)
-        textobject.textLines(' '.join(self.pdfContent))
+        for line in self.pdfContent:
+            textobject.textLine(line)
         c.drawText(textobject)
         c.save()
         
