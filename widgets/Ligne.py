@@ -15,11 +15,6 @@ class Ligne():
         else : 
             print("La note n'est pas valide")
         
-# if __name__ == "__main__":
-#     ligne = Ligne()
-#     ligne.addNote(12, 5)
-#     print(''.join(ligne.liste))
-#     ligne.addNote(22, 3)
     
 
     

@@ -1,12 +1,11 @@
 import sys
 from widgets.Ligne import Ligne
+from widgets.pdfGestion import PdfGestion
 try:
     from PySide6 import QtCore, QtWidgets
 except ImportError:
     print("PySide6 is not installed")
     sys.exit(1)
-
-
 
 class MainWidget(QtWidgets.QWidget):
     def __init__(self):
@@ -20,14 +19,17 @@ class MainWidget(QtWidgets.QWidget):
         self.first_line_display = QtWidgets.QListWidget()
         self.first_line_display.setFlow(QtWidgets.QListWidget.LeftToRight)
         self.first_line_display.setFixedHeight(50)
+        self.download_PDF = QtWidgets.QPushButton("Download PDF")
         
         for item in self.first_line.note_container:
             self.first_line_display.addItem(str(item))
 
         self.layoutMain.addWidget(self.first_line_display)
+        self.layoutMain.addWidget(self.download_PDF)
         self.setLayout(self.layoutMain)
         
         self.first_line_display.itemClicked.connect(self.setCurrentIndex)
+        self.download_PDF.clicked.connect(self.downloadPDF)
         
         
         
@@ -56,7 +58,11 @@ class MainWidget(QtWidgets.QWidget):
         self.submit_button.deleteLater()
         self.submit_button = None
         
-        
+    def downloadPDF(self):
+        pdfContent = self.first_line.note_container
+        filename = "notes.pdf"
+        PdfGestion(pdfContent, filename)
+        print("PDF downloaded")
         
     
         
