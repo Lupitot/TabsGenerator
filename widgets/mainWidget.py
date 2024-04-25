@@ -23,13 +23,13 @@ class MainWidget(QtWidgets.QWidget):
         self.fourthLine = self.fourth_line.note_container
         self.setStyleSheet("""
             QWidget {
-                background-color: #333;
-                color: #fff;
+                background-color: #CCC9DC;
+                color: #0C1821;
                 font-size: 16px;
             }
 
             #validateName {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 height: 50px;
                 width: 50px;
@@ -39,14 +39,15 @@ class MainWidget(QtWidgets.QWidget):
                 background-color: #777;
             }
             #choiceName {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 padding: 5px;
                 margin: 5px;
                 font-size: 20px;
+                border-radius: 7px;
             }
             #download_PDF {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 width: 50px;
                 height: 50px;
@@ -57,25 +58,28 @@ class MainWidget(QtWidgets.QWidget):
                 background-color: #777;
             }
             #note_changer {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 padding: 5px;
                 margin: 5px;
                 font-size: 20px;
+                border-radius: 7px;
             }
             #submit_button {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 padding: 5px;
                 margin: 5px;
                 font-size: 20px;
+                border-radius: 7px;
             }
             
             QListWidget {
-                background-color: #555;
+                background-color: #CCC9DC;
                 border: none;
                 padding: 5px;
                 margin: 5px;
+                border-radius: 7px;
             }
 
         """)
